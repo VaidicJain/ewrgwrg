@@ -12,7 +12,7 @@ engine = create_engine(settings.database_url, connect_args=_connect_args)
 
 def init_db() -> None:
     """Create tables. Models must be imported so they register on SQLModel.metadata."""
-    from app.models import fuelhh  # noqa: F401
+    from app.models import fuelhh, windfor  # noqa: F401
 
     SQLModel.metadata.create_all(engine)
 
