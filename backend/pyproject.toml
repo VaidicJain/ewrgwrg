@@ -1,0 +1,22 @@
+[project]
+name = "gridbricks-backend"
+version = "0.1.0"
+description = "Wind generation monitoring API built on Elexon BMRS data"
+requires-python = ">=3.11"
+dependencies = [
+    "fastapi>=0.115",
+    "uvicorn[standard]>=0.30",
+    "sqlmodel>=0.0.22",
+    "pydantic>=2.7",
+    "pydantic-settings>=2.3",
+    "httpx>=0.27",
+]
+
+[dependency-groups]
+dev = [
+    "pytest>=8.0",
+]
+
+[tool.uv]
+# This is an application, not a library, so uv should not try to build/install it as a package.
+package = false
