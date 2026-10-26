@@ -9,8 +9,8 @@ Data: Elexon BMRS, national GB wind only, purchase decisions for **January 2026*
 
 | | |
 |---|---|
-| Live app | `<ADD VERCEL FRONTEND URL>` |
-| Live API docs | `<ADD VERCEL BACKEND URL>/docs` |
+| Live app | https://ewrgwrg-kql7.vercel.app |
+| Live API docs | https://ewrgwrg.vercel.app/docs |
 | Demo video | `<ADD UNLISTED YOUTUBE URL>` |
 
 ## The problem in one paragraph

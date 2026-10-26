@@ -2,10 +2,10 @@
 
 Two Vercel projects from the same GitHub repository:
 
-| Project | Root Directory | What it is |
+| Project | Root Directory | Live URL |
 |---|---|---|
-| `<name>-api` | `backend` | FastAPI, served as a single Vercel Function |
-| `<name>-web` | `frontend` | Next.js app |
+| Backend (FastAPI, served as a single Vercel Function) | `backend` | https://ewrgwrg.vercel.app (docs at `/docs`) |
+| Frontend (Next.js) | `frontend` | https://ewrgwrg-kql7.vercel.app |
 
 Deploy the **backend first**, because the frontend needs its URL.
 
@@ -23,7 +23,7 @@ Deploy the **backend first**, because the frontend needs its URL.
    | Name | Value |
    |---|---|
    | `DATABASE_URL` | `sqlite:////tmp/gridbricks.db` |
-   | `CORS_ORIGINS` | `["http://localhost:3000"]` for now (updated in step 3) |
+   | `CORS_ORIGINS` | `["http://localhost:3000"]` for now (updated in step 3). Must be a JSON list: a bare URL crashes the backend at startup. |
 
    Vercel's filesystem is read-only except `/tmp`. On the first request the app copies the committed
    `gridbricks.db` into `/tmp` and uses it from there.
@@ -43,7 +43,8 @@ Deploy the **backend first**, because the frontend needs its URL.
 
 ## 3. Connect them (CORS)
 1. Backend project -> Settings -> Environment Variables -> edit `CORS_ORIGINS` to
-   `["https://<your-frontend>.vercel.app"]` (keep `"http://localhost:3000"` in the list if you still want local dev).
+   `["https://ewrgwrg-kql7.vercel.app","http://localhost:3000"]` (use your own frontend origin: no trailing slash,
+   JSON list with double quotes).
 2. **Redeploy the backend** (env changes apply only to new deployments).
 3. Open the frontend URL, apply a filter, and confirm charts load with no CORS error in the browser console.
 
@@ -59,7 +60,8 @@ Protection for the project (Settings -> Deployment Protection).
 | Symptom | Likely cause / fix |
 |---|---|
 | Frontend shows "Cannot reach the API" | Wrong `NEXT_PUBLIC_API_URL`, or frontend not redeployed after changing it. |
-| Browser console: CORS error | Frontend origin missing in `CORS_ORIGINS`, or backend not redeployed after editing it. |
+| Every backend URL (even `/health`) returns 500 `FUNCTION_INVOCATION_FAILED` | `CORS_ORIGINS` is not a JSON list. It must look like `["https://<frontend>.vercel.app","http://localhost:3000"]`, not a bare URL. |
+| Browser console: CORS error | Frontend origin missing in `CORS_ORIGINS`, or backend not redeployed after editing it. Also check it is a valid JSON list: an invalid value makes every backend route fail with a 500 (`FUNCTION_INVOCATION_FAILED`), which the browser reports as a CORS error. |
 | API works but `overall` is null | `gridbricks.db` not in the deployment. Confirm it is committed and not git-ignored (`.gitignore` has an exception for it), and the backend Root Directory is `backend`. |
 | 500 on first request | Open the function logs in Vercel (Deployments -> Functions/Logs) to see the traceback. |
 | Backend build fails on dependencies | Vercel installs from `pyproject.toml`/`requirements.txt`; run `pip install -r requirements.txt` locally on Python 3.12 to reproduce. |

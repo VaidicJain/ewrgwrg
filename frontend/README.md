@@ -70,5 +70,7 @@ src/
 Uses a multi-stage build and Next's `standalone` output. Normally started through `docker compose` at the root.
 
 ## Deploy on Vercel
+Live: https://ewrgwrg-kql7.vercel.app (API: https://ewrgwrg.vercel.app/docs).
+
 Import the repository, set **Root Directory** to `frontend`, add `NEXT_PUBLIC_API_URL` pointing at the deployed
 backend, then deploy. Full steps are in [../DEPLOYMENT.md](../DEPLOYMENT.md).

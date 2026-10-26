@@ -3,6 +3,9 @@
 Wind generation monitoring API built on Elexon BMRS data (FUELHH actuals, WINDFOR forecasts).
 For the big picture see the [root README](../README.md).
 
+Live: https://ewrgwrg.vercel.app/docs (interactive API docs). Used by the frontend at https://ewrgwrg-kql7.vercel.app.
+On Vercel `DATABASE_URL` is `sqlite:////tmp/gridbricks.db` and `CORS_ORIGINS` must be a JSON list that includes the frontend origin (see [../DEPLOYMENT.md](../DEPLOYMENT.md)).
+
 ## Run locally
 
 ```powershell
