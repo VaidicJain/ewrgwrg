@@ -5,6 +5,8 @@ __pycache__/
 venv/
 .pytest_cache/
 *.db
+# The seeded January 2026 dataset ships with the repo so the deployed app works offline
+!backend/gridbricks.db
 
 # Env
 .env

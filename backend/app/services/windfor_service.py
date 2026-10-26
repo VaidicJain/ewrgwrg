@@ -22,6 +22,15 @@ def day_start(value: date) -> datetime:
     return datetime.combine(value, time.min, tzinfo=UTC)
 
 
+def publish_window(start_date: date, end_date: date, lookback_days: int = 3) -> tuple[datetime, datetime]:
+    """Publish-time window that covers every forecast relevant to the given target dates.
+
+    Forecasts for a day are created in the days before it, so the window starts `lookback_days`
+    before start_date and ends at the end of end_date.
+    """
+    return day_start(start_date) - timedelta(days=lookback_days), day_start(end_date) + timedelta(days=1)
+
+
 def query_windfor(
     session: Session,
     start_date: date,

@@ -45,9 +45,10 @@ class FakeElexonClient:
 
     async def fetch_fuelhh(self, start_date, end_date, fuel_types):
         self.calls += 1
+        day = start_date.isoformat()
         return [
-            make_record("2026-01-01T00:00:00Z", self.generation, 1),
-            make_record("2026-01-01T00:30:00Z", self.generation + 50, 2),
+            make_record(f"{day}T00:00:00Z", self.generation, 1),
+            make_record(f"{day}T00:30:00Z", self.generation + 50, 2),
         ]
 
     async def fetch_windfor(self, publish_from, publish_to):

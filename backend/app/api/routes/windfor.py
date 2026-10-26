@@ -68,8 +68,7 @@ async def sync_windfor(
     start earlier than the target dates. Existing rows are skipped.
     """
     _validate_range(start_date, end_date)
-    publish_from = windfor_service.day_start(start_date) - timedelta(days=lookback_days)
-    publish_to = windfor_service.day_start(end_date) + timedelta(days=1)
+    publish_from, publish_to = windfor_service.publish_window(start_date, end_date, lookback_days)
     try:
         result = await windfor_service.sync_windfor(session, client, publish_from, publish_to)
     except ElexonError as exc:
