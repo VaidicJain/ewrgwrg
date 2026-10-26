@@ -1,0 +1,9 @@
+.venv
+__pycache__
+*.pyc
+.pytest_cache
+.env
+.git
+Dockerfile
+.dockerignore
+# NOTE: gridbricks.db is deliberately NOT ignored: it is the seed dataset the image ships with.

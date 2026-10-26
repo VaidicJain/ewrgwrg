@@ -12,6 +12,10 @@ dependencies = [
     "httpx>=0.27",
 ]
 
+[tool.vercel]
+# Lets Vercel find the FastAPI instance when this folder is deployed as its own project.
+entrypoint = "app.main:app"
+
 [dependency-groups]
 dev = [
     "pytest>=8.0",

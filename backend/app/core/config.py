@@ -13,6 +13,8 @@ class Settings(BaseSettings):
 
     # Local default is SQLite; swap for Postgres by changing this URL only.
     database_url: str = "sqlite:///./gridbricks.db"
+    # Optional: a pre-filled SQLite file copied to the database path on first start when that path
+    seed_db_path: str | None = None
 
     elexon_base_url: str = "https://data.elexon.co.uk/bmrs/api/v1"
     elexon_timeout_seconds: float = 30.0

@@ -1,0 +1,37 @@
+services:
+  backend:
+    build:
+      context: ./backend
+    container_name: gridbricks-backend
+    ports:
+      - "8000:8000"
+    environment:
+      # Browsers call the API from http://localhost:3000, so that origin must be allowed.
+      CORS_ORIGINS: '["http://localhost:3000"]'
+    volumes:
+      # Keeps the SQLite file between restarts. First start copies the shipped dataset into it.
+      - gridbricks-data:/data
+    healthcheck:
+      test: ["CMD", "python", "-c", "import urllib.request; urllib.request.urlopen('http://localhost:8000/health')"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+      start_period: 10s
+    restart: unless-stopped
+
+  frontend:
+    build:
+      context: ./frontend
+      args:
+        # Address the BROWSER uses to reach the API (not the Docker-internal name).
+        NEXT_PUBLIC_API_URL: http://localhost:8000
+    container_name: gridbricks-frontend
+    ports:
+      - "3000:3000"
+    depends_on:
+      backend:
+        condition: service_healthy
+    restart: unless-stopped
+
+volumes:
+  gridbricks-data:
